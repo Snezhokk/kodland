@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>{{ article.title }} - kodland</title>
+    <style>
+        body{
+            background: #E5E5E5;
+        }
+        .article {
+            width: 607px;
+            margin: auto;
+        }
+        .article .title {
+            font-family: Museo Cyrl;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 128%;
+            /* or 41px */
+
+            letter-spacing: -0.416667px;
+
+            color: #315AF2;
+
+            width: 459px;
+            margin-bottom: 20px;
+        }
+        .article img{
+            width: 100%;
+            object-fit: cover;
+            margin-bottom: 10px;
+        }
+        .article .subtitle {
+            font-family: Circe Rounded;
+            font-size: 24px;
+            line-height: 28px;
+            /* identical to box height, or 117% */
+
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.416667px;
+
+            color: #404040;
+
+            margin: 0 0 10px 0;
+        }
+        .article .text{
+            padding-bottom: 20px;
+        }
+        .editor-preview.editor-preview-active {
+            background: #E5E5E5;
+        }
+        .CodeMirror {
+            border: 0 !important;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/editor/simplemde.min.css"/>
+    <script src="/static/editor/simplemde.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div class="article">
+        <h1 class="title">
+            {{ article.title }}
+        </h1>
+        <img src="{{ article.image.url }}"/>
+        <textarea class="text" id="editor">{{ article.text }}</textarea>
+    </div>
+    <script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("editor"), toolbar: false, status: false });
+    simplemde.togglePreview();
+    </script>
+{% endblock %}

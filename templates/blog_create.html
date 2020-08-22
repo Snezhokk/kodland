@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>Добавить статью - kodland</title>
+    <style>
+        .add_blog {
+            font-family: Museo Cyrl;
+            font-size: 45px;
+            line-height: 52px;
+            /* identical to box height, or 116% */
+
+            letter-spacing: -0.416667px;
+
+            color: #315AF2;
+
+            margin-top: 40px;
+        }
+        .title {
+            background: #FFFFFF;
+            border: 2px solid #CDCDCD;
+            border-radius: 3px;
+
+            width: 881px;
+            height: 48px;
+
+            padding: 0 20px;
+
+            font-size: 24px;
+            color: #315AF2;
+            font-weight: bold;
+            float: left;
+            margin-right: 8px;
+        }
+        .title::placeholder {
+            font-family: Circe Rounded;
+            font-size: 24px;
+            line-height: 52px;
+            /* identical to box height, or 217% */
+
+            letter-spacing: -0.416667px;
+
+            color: #C4C4C4;
+            font-weight: normal;
+        }
+        .publish {
+            background: #E9399C;
+            border-radius: 3px;
+
+            width: 159px;
+            height: 52px;
+
+            font-family: Museo Cyrl;
+            font-size: 18px;
+            line-height: 22px;
+            /* identical to box height */
+
+
+            color: #FFFFFF;
+
+            border-color: transparent;
+            float: left;
+            cursor: pointer;
+        }
+        .publish:after{
+            clear: both;
+        }
+        .editor-container{
+            width: 925px;
+
+            padding-top: 20px;
+            float: left;
+            margin-right: 8px;
+        }
+        .image-upload {
+            width: 298px;
+            background: #FFFFFF;
+            border: 2px solid #CDCDCD;
+            box-sizing: border-box;
+            border-radius: 3px;
+
+            text-align: center;
+            margin: 20px 0 0 0;
+            padding: 20px 0;
+            float: left;
+        }
+        .image-upload .text {
+            font-family: Circe Rounded;
+            font-size: 24px;
+            line-height: 31px;
+            /* identical to box height */
+
+            text-align: center;
+
+            color: #315AF2;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .image-upload .upload {
+            background: #315AF2;
+            border-radius: 3px;
+            border-color: transparent;
+
+            font-family: Museo Cyrl;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 22px;
+            /* identical to box height */
+
+
+            color: #FFFFFF;
+
+            width: 155px;
+            height: 50px;
+
+            display: inline-block;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+        .image-upload .upload input {
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+        .image-upload .upload span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%);
+        }
+        #preview{
+            max-width: 100%;
+            object-fit: cover;
+        }
+        #preview[src=""]{
+            display: none;
+        }
+        .image-upload .preview-container{
+            position: relative;
+        }
+        .image-upload .preview-container button {
+            cursor: pointer;
+            border: 0;
+            background: transparent;
+            position: absolute;
+            top: 4px;
+            right: 4px;
+        }
+        .image-upload .preview-container button:before{
+            color: #E5E5E5;
+        }
+        .image-upload .preview-container button.hidden {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="/static/editor/simplemde.min.css"/>
+    <script src="/static/editor/simplemde.min.js"></script>
+    <link rel="stylesheet" href="/static/css/font-awesome.css">
+{% endblock %}
+{% block content %}
+    <form class="content" enctype="multipart/form-data" method="post" action="/blog/create/">
+        <h1 class="add_blog">Добавить статью</h1>
+        <input id="title" class="title" placeholder="Введите название статьи" name="title"/>
+        <button class="publish" type="submit">Опубликовать</button>
+        <div class="editor-container">
+            <textarea id="editor" name="text"></textarea>
+        </div>
+        <div class="image-upload">
+            <span class="text">Загрузить изображение</span>
+            <span class="upload">
+                <span>Файл</span>
+                <input id="image" type="file" name="image"/>
+            </span>
+            <div class="preview-container">
+                <img id="preview" src=""/>
+                <button class="fa fa-times-circle hidden" onclick="removeImage()"></button>
+            </div>
+        </div>
+    </form>
+    <script>
+    var simplemde = new SimpleMDE({ element: document.getElementById("editor") });
+
+    function removeImage(){
+        document.getElementById("preview").src = "";
+        document.querySelector(".image-upload .upload").style.display = "";
+        document.querySelector(".image-upload .preview-container button").className = "fa fa-times-circle hidden";
+    }
+
+    function readURL(event) {
+        if (this.files && this.files[0]) {
+          var reader = new FileReader();
+
+          reader.onload = function(e) {
+              document.querySelector(".image-upload .upload").style.display = "none";
+              document.getElementById("preview").src = e.target.result
+              document.querySelector(".image-upload .preview-container button").className = "fa fa-times-circle";
+          }
+
+          reader.readAsDataURL(this.files[0]); // convert to base64 string
+        }
+    }
+
+    function publish(){
+        console.log(document.getElementById("title").value)
+        console.log(simplemde.value())
+    }
+
+    document.getElementById("image").onchange = readURL
+    </script>
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% block head %}
+    <title>Блог - kodland</title>
+    <style>
+        .group-122{
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .group-122 .group-51 {
+            width: 672px;
+            display: inline-block;
+        }
+        .group-122 .group-51 .new {
+            font-family: Circe Rounded;
+            font-size: 16px;
+            line-height: 20px;
+            /* identical to box height, or 125% */
+
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.416667px;
+
+            color: #E9399C;
+
+            margin: 0;
+        }
+        .group-122 .group-51 .title {
+            font-family: Museo Cyrl;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 44px;
+            line-height: 128%;
+            /* or 56px */
+
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.416667px;
+
+            color: #315AF2;
+
+            margin: 0 0 10px 0;
+        }
+        .group-122 .group-51 .subtitle {
+            font-family: Circe Rounded;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 16px;
+            line-height: 136%;
+            /* or 22px */
+
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.416667px;
+
+            color: #000000;
+
+            width: 391px;
+            margin: 0 0 10px 0;
+        }
+        /*
+        .group-122 .group-51 .frame-54 {
+            background: #315AF2;
+            width: 150px;
+            border-radius: 6px;
+        }
+        .group-122 .group-51 .frame-54 a {
+            font-family: Museo Cyrl;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 38px;
+
+            letter-spacing: -0.416667px;
+
+            color: #FFFFFF;
+
+
+
+            align-self: center;
+
+            width: 144px;
+            background: transparent;
+            border: 0;
+            margin: 0;
+
+            display: flex;
+            align-items: center;
+        }
+         */
+        .group-122 .group-51 .read {
+            background: #315AF2;
+            border-radius: 6px;
+
+            font-family: Museo Cyrl;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 30px;
+            line-height: 38px;
+
+            letter-spacing: -0.416667px;
+
+            color: #FFFFFF;
+
+
+            align-self: center;
+
+            width: 144px;
+            border: 0;
+            margin: 0;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .group-122 img {
+            display: inline-block;
+            /*margin-bottom: -48px;*/
+        }
+        .group-120 {
+            padding-bottom: 40px;
+        }
+        .group-120 .other-articles {
+            font-family: Museo Cyrl;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 32px;
+            line-height: 38px;
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.416667px;
+
+            color: #315AF2;
+
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        .group-120 .article {
+            background: #FFFFFF;
+            border: 2px solid #CDCDCD;
+            box-sizing: border-box;
+            border-radius: 3px;
+
+            width: 335px;
+            height: 300px;
+            position: relative;
+
+            margin-right: 80px;
+            margin-bottom: 20px;
+            float: left;
+        }
+        .group-120 .article .date {
+            font-family: Circe Rounded;
+            font-size: 12px;
+            line-height: 20px;
+            /* identical to box height, or 167% */
+
+            display: flex;
+            align-items: center;
+            letter-spacing: -0.416667px;
+
+            color: #979797;
+
+
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            margin: 0;
+        }
+        .group-120 .article img {
+            width: 217px;
+            /*height: 112px;*/
+            height: 134px;
+
+            object-fit: contain;
+            margin: 20px 57px 20px 57px;
+        }
+        .group-120 .article .text {
+            font-family: Circe Rounded;
+            font-size: 24px;
+            line-height: 120%;
+            /* or 29px */
+
+            /*display: flex;
+            align-items: center;*/
+            text-align: center;
+            letter-spacing: -0.416667px;
+
+            color: #315AF2;
+
+            margin: 0 40px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    {% if articles.first %}
+        {% with articles.first as article %}
+            <div class="group-122 content">
+                <div class="group-51">
+                    <p class="new">NEW</p>
+                    <h1 class="title">
+                        {{ article.title }}
+                    </h1>
+                    <h6 class="subtitle">
+                        Здесь, видимо, должен был быть отдельный текст, вводимый пользователем, но он не предусмотрен ни в форме для создания статьи, ни в ТЗ.
+                        Поэтому пускай будет тот вариант, что в макете:
+                        <br/>
+                        "Объясняем почему словосочетание «программирование для подростков» не должно вызывать скептическую
+                                улыбку и какие полезные навыки приобретают ребята, изучая программирование."
+                    </h6>
+                    <a class="read" href="{% url "article_details" pk=article.id %}">Читать</a>
+                </div>
+                <img src="{{ article.image.url }}"/>
+            </div>
+        {% endwith %}
+    {% endif %}
+    <div class="line-3"></div>
+    <div class="group-120 content">
+        <p class="other-articles">Другие статьи</p>
+        {% for article in articles %}
+             <a class="article" href="{% url "article_details" pk=article.id %}">
+                <p class="date">{{ article.created }}</p>
+                <img src="{{ article.image.url }}"/>
+                <p class="text">{{ article.title }}</p>
+             </a>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "kodland"
+version = "1.0.0"
+description = ""
+authors = ["Snezhokk <vlad.tymenev@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.6 <3.8"
+django = "3.1"
+pillow = "^7.2.0"
+
+[tool.poetry.dev-dependencies]
+# poetry
+yapf = "0.30.0"
+[build-system]
+# Should be the same as `$POETRY_VERSION`:
+requires = ["poetry>=1.0.8"]
+build-backend = "poetry.masonry.api"
